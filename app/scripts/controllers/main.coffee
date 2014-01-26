@@ -11,7 +11,7 @@ angular.module("ap7amApp").controller "MainCtrl", ["$scope", "$http", "$modal", 
       get("http://gdata.youtube.com/feeds/api/users/#{channel}/uploads?orderby=published&alt=json").
       success updateFeed
 
-  angular.forEach ['tv9telugu', 'abntelugutv', 'ibnlive', 'NTVNewsChannel'], addChannel
+  angular.forEach ['snehatvtv9et','tv9telugu', 'abntelugutv', 'ibnlive', 'NTVNewsChannel'], addChannel
 
 
   $scope.movie = source: "http://www.youtube.com/watch?v=l0HFz3bbkiU"
