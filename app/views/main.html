@@ -35,7 +35,7 @@
 <script type="text/ng-template" id="myModalContent.html">
   <div class="modal-body">
     <div class="row">
-      <div class="col-md-2" ng-repeat="vid in videos">
+      <div class="col-md-3" ng-repeat="vid in videos">
         <a class="thumbnail" ng-click="selectVideo(vid)">
           <img ng-src="http://img.youtube.com/vi/{{vid.youtubeId}}/1.jpg"
               popover="{{vid.title.$t}}" popover-trigger="mouseenter">

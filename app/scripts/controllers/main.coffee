@@ -1,16 +1,15 @@
 'use strict'
 
 angular.module("ap7amApp").controller "MainCtrl", ["$scope", "$http", "$modal", ($scope, $http, $modal) ->
-  dataurl = "http://gdata.youtube.com/feeds/api/users/tv9telugu/uploads?orderby=published&alt=json"
+  tv9 = "http://gdata.youtube.com/feeds/api/users/tv9telugu/uploads?orderby=published&alt=json"
+  abn = "http://gdata.youtube.com/feeds/api/users/abntelugutv/uploads?orderby=published&alt=json"
   regId = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-  $http.get(dataurl).success (data) ->
+
+  updateYoutubeId = (v) -> angular.extend v, youtubeId: v.link[0].href.match(regId)[2]
+
+  $http.get(abn).success (data) ->
     $scope.vids = data.feed.entry
-    angular.forEach $scope.vids, (video) ->
-      match = video.link[0].href.match(regId)
-      angular.extend video,
-        youtubeId: match[2]
-
-
+    angular.forEach $scope.vids, updateYoutubeId
 
   $scope.movie = source: "http://www.youtube.com/watch?v=l0HFz3bbkiU"
   $scope.config =
@@ -56,6 +55,5 @@ angular.module("ap7amApp").controller "MainCtrl", ["$scope", "$http", "$modal", 
     )
     modalInstance.result.then ((selected) ->
       $scope.movie.source = selected.link[0].href
-    ), ->
-      $log.info "Modal dismissed at: " + new Date()
+    )
 ]
