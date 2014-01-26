@@ -1,15 +1,18 @@
 'use strict'
 
 angular.module("ap7amApp").controller "MainCtrl", ["$scope", "$http", "$modal", ($scope, $http, $modal) ->
-  tv9 = "http://gdata.youtube.com/feeds/api/users/tv9telugu/uploads?orderby=published&alt=json"
-  abn = "http://gdata.youtube.com/feeds/api/users/abntelugutv/uploads?orderby=published&alt=json"
   regId = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+  $scope.channels = {}
+  addChannel = (channel)  =>
+    updateYoutubeId = (v) -> angular.extend v, youtubeId: v.link[0].href.match(regId)[2]
+    updateFeed = (data) ->
+      angular.forEach ($scope.channels[channel] = data.feed.entry.slice(0,24)),updateYoutubeId
+    $http.
+      get("http://gdata.youtube.com/feeds/api/users/#{channel}/uploads?orderby=published&alt=json").
+      success updateFeed
 
-  updateYoutubeId = (v) -> angular.extend v, youtubeId: v.link[0].href.match(regId)[2]
+  angular.forEach ['tv9telugu', 'abntelugutv', 'ibnlive', 'NTVNewsChannel'], addChannel
 
-  $http.get(abn).success (data) ->
-    $scope.vids = data.feed.entry
-    angular.forEach $scope.vids, updateYoutubeId
 
   $scope.movie = source: "http://www.youtube.com/watch?v=l0HFz3bbkiU"
   $scope.config =
@@ -45,13 +48,13 @@ angular.module("ap7amApp").controller "MainCtrl", ["$scope", "$http", "$modal", 
     $scope.cancel = ->
       $modalInstance.dismiss "cancel"
   ]
-  $scope.open = ->
+  $scope.open = (channel)->
     modalInstance = $modal.open(
       templateUrl: "myModalContent.html"
       controller: ModalInstanceCtrl
       resolve:
         videos: ->
-          $scope.vids
+          $scope.channels[channel]
     )
     modalInstance.result.then ((selected) ->
       $scope.movie.source = selected.link[0].href
