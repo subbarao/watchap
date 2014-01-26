@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-9">
+    <videogular vg-width="config.width" vg-height="config.height" vg-theme="config.theme.url" vg-autoplay="config.autoPlay" vg-stretch="config.stretch.value" vg-responsive="config.responsive">
+      <video class='videoPlayer' preload='metadata'>
+        <source type="video/youtube" src= "http://www.youtube.com/watch?v=l0HFz3bbkiU" />
+      </video>
+
+      <vg-youtube video-url="movie.source"></vg-youtube>
+      <vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
+
+      <vg-controls vg-autohide="config.autoHide" style="height: 50px;">
+        <vg-play-pause-button vg-play-icon="config.theme.playIcon" vg-pause-icon="config.theme.pauseIcon"></vg-play-pause-button>
+        <vg-timeDisplay>{{ currentTime }}</vg-timeDisplay>
+        <vg-scrubBar>
+          <vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
+        </vg-scrubBar>
+        <vg-timeDisplay>{{ totalTime }}</vg-timeDisplay>
+        <vg-volume>
+          <vg-mutebutton
+              vg-volume-level-3-icon="config.theme.volumeLevel3Icon"
+              vg-volume-level-2-icon="config.theme.volumeLevel2Icon"
+              vg-volume-level-1-icon="config.theme.volumeLevel1Icon"
+              vg-volume-level-0-icon="config.theme.volumeLevel0Icon"
+              vg-mute-icon="config.theme.muteIcon">
+          </vg-mutebutton>
+          <vg-volumebar></vg-volumebar>
+        </vg-volume>
+        <vg-fullscreenButton vg-enter-full-screen-icon="config.theme.enterFullScreenIcon" vg-exit-full-screen-icon="config.theme.exitFullScreenIcon"></vg-fullscreenButton>
+      </vg-controls>
+    </videogular>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-2" ng-repeat="vid in videos">
+        <a class="thumbnail" ng-click="selectVideo(vid)">
+          <img ng-src="http://img.youtube.com/vi/{{vid.youtubeId}}/1.jpg"
+              popover="{{vid.title.$t}}" popover-trigger="mouseenter">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<button class="btn btn-default" ng-click="open()">
+  <span class="glyphicon glyphicon-th" style="font-size: 14px;"> </span>
+  <span style="font-size: 17px;">More Videos</span>
+</button>
