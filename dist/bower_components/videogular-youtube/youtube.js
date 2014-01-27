@@ -168,7 +168,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             if (value) {
                                 console.log("Api loaded..");
                                 if (result.method === 'youtube')
-                                    scope.loadYoutube();
+                                  window.setTimeout(scope.loadYoutube, 100);
                             }
                         })
                         scope.removeHtmlMediaElementListener = function(htmlMediaElement) {
